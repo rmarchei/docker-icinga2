@@ -42,9 +42,9 @@ if [ ! -f "${initfile}" ]; then
         /usr/bin/mysqld_safe 2>&1 >/dev/null &
         sleep 10s
         mysql -uroot -e "DROP DATABASE IF EXISTS test ;"
-        mysql -uroot -e "CREATE DATABASE IF NOT EXISTS icinga ; GRANT ALL ON icinga.* TO icinga@localhost IDENTIFIED BY 'icinga';"
+        mysql -uroot -e "CREATE DATABASE IF NOT EXISTS icinga ; GRANT ALL ON icinga.* TO icinga@localhost IDENTIFIED BY 'icinga'; FLUSH PRIVILEGES;"
         mysql -uicinga -picinga icinga < /usr/share/icinga2-ido-mysql/schema/mysql.sql
-        mysql -uroot -e "CREATE DATABASE IF NOT EXISTS icingaweb2 ; GRANT ALL ON icingaweb2.* TO icingaweb2@localhost IDENTIFIED BY 'icingaweb2';"
+        mysql -uroot -e "CREATE DATABASE IF NOT EXISTS icingaweb2 ; GRANT ALL ON icingaweb2.* TO icingaweb2@localhost IDENTIFIED BY 'icingaweb2'; FLUSH PRIVILEGES;"
         mysql -uicingaweb2 -picingaweb2 icingaweb2 < /usr/share/doc/icingaweb2/schema/mysql.schema.sql
         mysql -uicingaweb2 -picingaweb2 icingaweb2 -e "INSERT INTO icingaweb_user (name, active, password_hash) VALUES ('icingaadmin', 1, '\$1\$iQSrnmO9\$T3NVTu0zBkfuim4lWNRmH.');"
         killall mysqld
