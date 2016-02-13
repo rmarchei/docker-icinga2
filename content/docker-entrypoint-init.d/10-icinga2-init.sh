@@ -41,6 +41,7 @@ if [ ! -f "${initfile}" ]; then
         mysql_install_db --user=mysql --ldata=/var/lib/mysql 2>&1 >/dev/null
         /usr/bin/mysqld_safe 2>&1 >/dev/null &
         sleep 10s
+        mysql -uroot -e "DROP DATABASE IF EXISTS test ;"
         mysql -uroot -e "CREATE DATABASE IF NOT EXISTS icinga ; GRANT ALL ON icinga.* TO icinga@localhost IDENTIFIED BY 'icinga';"
         mysql -uicinga -picinga icinga < /usr/share/icinga2-ido-mysql/schema/mysql.sql
         mysql -uroot -e "CREATE DATABASE IF NOT EXISTS icingaweb2 ; GRANT ALL ON icingaweb2.* TO icingaweb2@localhost IDENTIFIED BY 'icingaweb2';"
