@@ -12,7 +12,7 @@ RUN yum -y install http://packages.icinga.org/epel/7/release/noarch/icinga-rpm-r
   # we'll need that for mysql schema import for icingaweb2
   && ( [ -f /etc/rpm/macros.imgcreate ] && sed -i '/excludedocs/d' /etc/rpm/macros.imgcreate || exit 0 ) \
   && ( [ -f /etc/yum.conf ] && sed -i '/nodocs/d' /etc/yum.conf || exit 0 ) \
-  && yum install -y supervisor openssh-clients mailx httpd mariadb-server \
+  && yum install -y supervisor openssh-clients mailx httpd mariadb-server pwgen \
   && yum install -y icinga2 icinga2-doc icinga2-ido-mysql icingaweb2 icingacli nagios-plugins-all hp-ZendFramework php-ZendFramework-Db-Adapter-Pdo-Mysql psmisc iproute \
   && yum clean all -q
 
