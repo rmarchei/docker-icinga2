@@ -8,7 +8,8 @@ MAINTAINER Ruggero Marchei <ruggero.marchei@daemonzone.net>
 RUN yum -y install http://packages.icinga.org/epel/7/release/noarch/icinga-rpm-release-7-1.el7.centos.noarch.rpm \
   && yum install -y epel-release \
   && yum install -y supervisor openssh-clients mailx httpd mod_ssl openssl mariadb-server pwgen \
-  && sed -i 's/^tsflags=nodocs$/#tsflags=nodocs/g' /etc/yum.conf \
+  && yum clean all -q
+RUN sed -i 's/^tsflags=nodocs$/#tsflags=nodocs/g' /etc/yum.conf \
   && yum install -y icinga2 icinga2-doc icinga2-ido-mysql icingaweb2 icingacli nagios-plugins-all hp-ZendFramework php-ZendFramework-Db-Adapter-Pdo-Mysql psmisc iproute \
   && sed -i 's/^#tsflags=nodocs$/tsflags=nodocs/g' /etc/yum.conf \
   && yum clean all -q
