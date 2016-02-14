@@ -7,13 +7,10 @@ MAINTAINER Ruggero Marchei <ruggero.marchei@daemonzone.net>
 
 RUN yum -y install http://packages.icinga.org/epel/7/release/noarch/icinga-rpm-release-7-1.el7.centos.noarch.rpm \
   && yum install -y epel-release \
-  # docs are not installed by default https://github.com/docker/docker/issues/10650 https://registry.hub.docker.com/_/centos/
-  # official docs are wrong, go for http://superuser.com/questions/784451/centos-on-docker-how-to-install-doc-files
-  # we'll need that for mysql schema import for icingaweb2
-  && ( [ -f /etc/rpm/macros.imgcreate ] && sed -i '/excludedocs/d' /etc/rpm/macros.imgcreate || exit 0 ) \
-  && ( [ -f /etc/yum.conf ] && sed -i '/nodocs/d' /etc/yum.conf || exit 0 ) \
   && yum install -y supervisor openssh-clients mailx httpd mod_ssl openssl mariadb-server pwgen \
+  && sed -i 's/^tsflags=nodocs$/#tsflags=nodocs/g' /etc/yum.conf \
   && yum install -y icinga2 icinga2-doc icinga2-ido-mysql icingaweb2 icingacli nagios-plugins-all hp-ZendFramework php-ZendFramework-Db-Adapter-Pdo-Mysql psmisc iproute \
+  && sed -i 's/^#tsflags=nodocs$/tsflags=nodocs/g' /etc/yum.conf \
   && yum clean all -q
 
 ADD content/ /
