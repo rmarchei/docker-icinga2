@@ -46,7 +46,9 @@ if [ ! -f "${initfile}" ]; then
         mysql -uicinga -picinga icinga < /usr/share/icinga2-ido-mysql/schema/mysql.sql
         mysql -uroot -e "CREATE DATABASE IF NOT EXISTS icingaweb2 ; GRANT ALL ON icingaweb2.* TO icingaweb2@localhost IDENTIFIED BY 'icingaweb2'; FLUSH PRIVILEGES;"
         mysql -uicingaweb2 -picingaweb2 icingaweb2 < /usr/share/doc/icingaweb2/schema/mysql.schema.sql
-        mysql -uicingaweb2 -picingaweb2 icingaweb2 -e "INSERT INTO icingaweb_user (name, active, password_hash) VALUES ('icingaadmin', 1, '\$1\$iQSrnmO9\$T3NVTu0zBkfuim4lWNRmH.');"
+        mysql -uicingaweb2 -picingaweb2 icingaweb2 -e "INSERT INTO icingaweb_group (id, name) VALUES (1, 'Administrators');"
+        mysql -uicingaweb2 -picingaweb2 icingaweb2 -e "INSERT INTO icingaweb_group_membership (group_id, username) VALUES (1, 'admin');"
+        mysql -uicingaweb2 -picingaweb2 icingaweb2 -e "INSERT INTO icingaweb_user (name, active, password_hash) VALUES ('admin', 1, '\$1\$iQSrnmO9\$T3NVTu0zBkfuim4lWNRmH.');"
         killall mysqld
         sleep 1s
 
